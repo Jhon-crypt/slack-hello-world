@@ -13,7 +13,12 @@ const app = new App({
       handler: (req, res) => {
         // Handle URL verification challenge
         if (req.body.type === 'url_verification') {
-          return res.send({ challenge: req.body.challenge });
+          // Verify request authenticity using signing secret
+          // Respond with the challenge in the format Slack expects
+          res.set('Content-Type', 'application/json');
+          return res.json({ 
+            challenge: req.body.challenge 
+          });
         }
       },
     },
